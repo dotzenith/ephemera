@@ -215,6 +215,85 @@ pnpm --filter @ephemera/shared build            # Build types
 pnpm --filter @ephemera/shared generate:client  # Generate API types
 ```
 
+## Version Management
+
+This monorepo uses [Changesets](https://github.com/changesets/changesets) for synchronized versioning. All packages (api, web, shared) always share the same version number.
+
+### Quick Release Workflow
+
+1. **Make your changes** and commit them normally
+2. **Create a changeset** describing what changed:
+   ```bash
+   pnpm changeset
+   # Follow prompts: select change type (patch/minor/major) and write summary
+   ```
+3. **When ready to release**, run:
+   ```bash
+   pnpm release
+   # This will: version packages → create git tag → push to trigger Docker build
+   ```
+
+### Version Management Scripts
+
+```bash
+# Create a changeset (describes your changes)
+pnpm changeset
+
+# Check status of pending changesets
+pnpm changeset:status
+
+# Apply changesets and update versions + CHANGELOG
+pnpm version
+
+# Full release (version → tag → push)
+pnpm release
+
+# Individual release steps (if you want more control)
+pnpm release:version    # Update package.json + CHANGELOG
+pnpm release:tag        # Commit changes and create git tag
+pnpm release:push       # Push code and tags to trigger Docker build
+```
+
+### How It Works
+
+- **Changesets** track what changed between versions
+- **Synchronized versioning**: All packages version together (currently at v1.0.3)
+- **Automatic changelog**: Generated from changeset summaries
+- **Docker automation**: Pushing a git tag (e.g., `v1.0.4`) triggers the GitHub Action to build and publish a new Docker image
+
+### Example Release Flow
+
+```bash
+# 1. After implementing a new feature
+git add .
+git commit -m "feat: add book metadata export"
+
+# 2. Create a changeset
+pnpm changeset
+# → Select "minor" (new feature)
+# → Enter summary: "Add book metadata export functionality"
+
+# 3. Continue working, create more changesets for other changes
+pnpm changeset
+# → Select "patch" (bug fix)
+# → Enter summary: "Fix download progress bar display"
+
+# 4. When ready to release
+pnpm release
+# → All changesets consumed
+# → package.json versions bumped (e.g., 1.0.3 → 1.1.0)
+# → CHANGELOG.md updated
+# → Git tag v1.1.0 created
+# → Changes pushed to GitHub
+# → Docker build triggered automatically
+```
+
+### Version Types
+
+- **patch** (1.0.3 → 1.0.4): Bug fixes, minor tweaks
+- **minor** (1.0.3 → 1.1.0): New features, backwards-compatible changes
+- **major** (1.0.3 → 2.0.0): Breaking changes
+
 ## Development Workflow
 
 ### 1. Update API Schema
