@@ -2,6 +2,16 @@
 
 Search and download books from your girl's favorite archive. Supports auto-move to a [BookLore](https://github.com/booklore-app/booklore) or [Calibre-Web-Automated](https://github.com/crocodilestick/Calibre-Web-Automated) ingest folder or BookLore API upload.
 
+<div class="grid" markdown>
+
+![Downloads](preview/ephemera-downloads.png)
+
+![Search](preview/ephemera-search.png)
+
+![Settings](preview/ephemera-settings.png)
+
+</div>
+
 ## Docker setup
 
 ### Setup the container using the Docker Compose template below:
