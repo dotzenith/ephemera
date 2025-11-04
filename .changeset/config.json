@@ -14,5 +14,5 @@
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@ephemera/root"]
+  "ignore": []
 }
