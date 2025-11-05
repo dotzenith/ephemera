@@ -1,5 +1,11 @@
 # @ephemera/shared
 
+## 1.1.6
+
+### Patch Changes
+
+- fix adduser check, fix download destination label
+
 ## 1.1.5
 
 ### Patch Changes
