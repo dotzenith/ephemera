@@ -141,7 +141,7 @@ function SettingsComponent() {
                 <Radio
                   value="move_only"
                   label="Move Only"
-                  description="Move downloaded files to your configured download folder"
+                  description="Move downloaded files to your configured ingest folder"
                 />
                 <Radio
                   value="upload_only"
@@ -152,7 +152,7 @@ function SettingsComponent() {
                 <Radio
                   value="both"
                   label="Move and Upload"
-                  description="Move to download folder AND upload to Booklore (requires Booklore configuration)"
+                  description="Move to ingest folder AND upload to Booklore (requires Booklore configuration)"
                   disabled={!bookloreSettings?.enabled || !bookloreSettings?.connected}
                 />
               </Stack>
