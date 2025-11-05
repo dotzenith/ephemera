@@ -1,5 +1,11 @@
 # @ephemera/shared
 
+## 1.1.4
+
+### Patch Changes
+
+- fix crawlee
+
 ## 1.1.3
 
 ### Patch Changes

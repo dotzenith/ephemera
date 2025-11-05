@@ -1,5 +1,13 @@
 # @ephemera/api
 
+## 1.1.4
+
+### Patch Changes
+
+- fix crawlee
+- Updated dependencies
+  - @ephemera/shared@1.1.4
+
 ## 1.1.3
 
 ### Patch Changes
