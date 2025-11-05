@@ -1,5 +1,13 @@
 # @ephemera/api
 
+## 1.1.7
+
+### Patch Changes
+
+- auto create .crawlee folder
+- Updated dependencies
+  - @ephemera/shared@1.1.7
+
 ## 1.1.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @ephemera/shared
 
+## 1.1.7
+
+### Patch Changes
+
+- auto create .crawlee folder
+
 ## 1.1.6
 
 ### Patch Changes
