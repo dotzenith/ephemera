@@ -10,10 +10,10 @@ services:
     environment:
       # Required:
       AA_BASE_URL:
+      FLARESOLVERR_URL: http://flaresolverr:8191
 
       # Optional
       AA_API_KEY:
-      FLARESOLVERR_URL: http://flaresolverr:8191
       PUID: 1000
       PGID: 100
 
