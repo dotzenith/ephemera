@@ -63,7 +63,7 @@ services:
           "--no-verbose",
           "--tries=1",
           "--spider",
-          "http://localhost:8286/health",
+          "http://127.0.0.1:8286/health",
         ]
       interval: 30s
       timeout: 10s
@@ -87,7 +87,7 @@ services:
     #  - 1.0.0.1
 
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8191/health"]
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8191/health"]
       interval: 30s
       timeout: 10s
       start_period: 30s

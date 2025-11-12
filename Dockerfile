@@ -95,7 +95,7 @@ EXPOSE 8286
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT:-8286}/health || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:${PORT:-8286}/health || exit 1
 
 # Set entrypoint
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
