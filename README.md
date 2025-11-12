@@ -8,6 +8,8 @@ Search and download books from your girl's favorite archive. Supports auto-move 
 
 ![Search](preview/ephemera-search.png)
 
+![Requests](preview/ephemera-requests.png)
+
 ![Settings](preview/ephemera-settings.png)
 
 </div>
