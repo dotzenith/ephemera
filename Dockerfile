@@ -41,12 +41,18 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages/ ./packages/
 
-# Install only production dependencies
-RUN pnpm install --frozen-lockfile --prod
+# Approve better-sqlite3 build script before install
+RUN pnpm config set enable-pre-post-scripts false
+
+# Install only production dependencies (ignore scripts to skip husky)
+RUN pnpm install --frozen-lockfile --prod --ignore-scripts
 
 # Force rebuild better-sqlite3 with node-gyp
-RUN cd /app/node_modules/.pnpm/better-sqlite3@11.10.0/node_modules/better-sqlite3 && \
-    npm run build-release
+# Find the better-sqlite3 package and run build-release
+RUN SQLITE_PATH=$(find /app/node_modules/.pnpm -type d -path "*/better-sqlite3@*/node_modules/better-sqlite3" | head -n 1) && \
+    if [ -n "$SQLITE_PATH" ]; then \
+        cd "$SQLITE_PATH" && npm run build-release; \
+    fi
 
 # Stage 3: Production Runtime
 FROM node:22-alpine AS runtime
