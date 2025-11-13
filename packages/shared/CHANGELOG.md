@@ -1,5 +1,15 @@
 # @ephemera/shared
 
+## 1.3.0
+
+### Minor Changes
+
+- v1.3.0
+
+  feat: expose newznab/sabnzbd APIs for usenet indexer tools like readarr (#32)
+
+  fix: improve booklore error handling (#33)
+
 ## 1.2.2
 
 ### Patch Changes
