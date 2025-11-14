@@ -4,7 +4,7 @@ Search and download books from your girl's favorite archive. Includes a request 
 
 ## Main features
 
-- Download books from "the archive"
+- Download books from any archive
 - Use donator key for super fast downloads or a l----n library for fast free downloads (also supports slow downloads as a fallback)
 - Automatically import books to BookLore or Calibre-Web-Automated by utilizing their ingest folders and/or upload APIs
 - Request system to auto download non-available books once they become available

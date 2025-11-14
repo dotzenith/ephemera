@@ -1,5 +1,14 @@
 # @ephemera/api
 
+## 1.3.1
+
+### Patch Changes
+
+- - feat: build for arm64 (#37)
+  - fix(booklore): Fix Booklore authenticate error (#36) by coryshaw1
+- Updated dependencies
+  - @ephemera/shared@1.3.1
+
 ## 1.3.0
 
 ### Minor Changes
