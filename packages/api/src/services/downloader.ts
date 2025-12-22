@@ -49,15 +49,16 @@ export class Downloader {
     const params = new URLSearchParams({
       md5,
       key: AA_API_KEY,
+      domain_index: "1",
     });
 
     if (pathIndex !== undefined) {
       params.append("path_index", pathIndex.toString());
     }
 
-    if (domainIndex !== undefined) {
-      params.append("domain_index", domainIndex.toString());
-    }
+    // if (domainIndex !== undefined) {
+    //   params.append("domain_index", domainIndex.toString());
+    // }
 
     const url = `${AA_BASE_URL}/dyn/api/fast_download.json?${params.toString()}`;
 
