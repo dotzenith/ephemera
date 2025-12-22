@@ -49,7 +49,7 @@ export class Downloader {
     const params = new URLSearchParams({
       md5,
       key: AA_API_KEY,
-      domain_index: "1",
+      domain_index: "5",
     });
 
     if (pathIndex !== undefined) {
