@@ -1,5 +1,16 @@
 # @ephemera/shared
 
+## 1.4.1
+
+### Patch Changes
+
+- - feat: add auto-send option for email recipients
+  - fix: display author/title filters in requests and notifications
+  - Update README to explain AA_API_KEY requirement (#85)
+  - feat: add filter for author and title (#76) (#86)
+  - Update FLARESOLVERR_URL and healthcheck URL (#58)
+  - feat: Add configurable API base path support (#70)
+
 ## 1.4.0
 
 ### Minor Changes
