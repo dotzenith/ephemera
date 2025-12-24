@@ -105,6 +105,8 @@ class RequestCheckerService {
               // Send Apprise notification
               await appriseService.send("request_fulfilled", {
                 query: request.queryParams.q,
+                author: request.queryParams.author,
+                title: request.queryParams.title,
                 bookTitle: firstBook.title,
                 bookAuthors: firstBook.authors,
                 bookMd5: firstBook.md5,

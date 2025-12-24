@@ -66,6 +66,14 @@ function RequestCard({ request }: { request: SavedRequestWithBook }) {
     return Array.isArray(val) ? val : [val];
   };
 
+  if (params.author) {
+    filters.push(`Author: ${params.author}`);
+  }
+
+  if (params.title) {
+    filters.push(`Title: ${params.title}`);
+  }
+
   const extArray = toArray(params.ext);
   if (extArray.length > 0) {
     filters.push(`Format: ${extArray.join(", ")}`);
