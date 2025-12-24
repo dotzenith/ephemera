@@ -7,6 +7,7 @@ import {
   updateEmailSettingsSchema,
   emailRecipientSchema,
   emailRecipientCreateSchema,
+  emailRecipientUpdateSchema,
   sendEmailRequestSchema,
   sendEmailResponseSchema,
   emailTestRequestSchema,
@@ -261,8 +262,12 @@ const addEmailRecipientRoute = createRoute({
 
 app.openapi(addEmailRecipientRoute, async (c) => {
   try {
-    const { email, name } = c.req.valid("json");
-    const recipient = await emailSettingsService.addRecipient(email, name);
+    const { email, name, autoSend } = c.req.valid("json");
+    const recipient = await emailSettingsService.addRecipient(
+      email,
+      name,
+      autoSend,
+    );
 
     return c.json(
       {
@@ -319,6 +324,82 @@ app.openapi(deleteEmailRecipientRoute, async (c) => {
   }
 
   return c.body(null, 204);
+});
+
+// PATCH /email/recipients/:id
+const updateEmailRecipientRoute = createRoute({
+  method: "patch",
+  path: "/email/recipients/{id}",
+  tags: ["Email"],
+  summary: "Update email recipient",
+  description: "Update an email recipient by ID",
+  request: {
+    params: z.object({
+      id: z.coerce.number().int().positive(),
+    }),
+    body: {
+      content: {
+        "application/json": {
+          schema: emailRecipientUpdateSchema,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Recipient updated",
+      content: {
+        "application/json": {
+          schema: emailRecipientSchema,
+        },
+      },
+    },
+    400: {
+      description: "Invalid data",
+      content: {
+        "application/json": {
+          schema: errorResponseSchema,
+        },
+      },
+    },
+    404: {
+      description: "Recipient not found",
+      content: {
+        "application/json": {
+          schema: errorResponseSchema,
+        },
+      },
+    },
+  },
+});
+
+app.openapi(updateEmailRecipientRoute, async (c) => {
+  try {
+    const { id } = c.req.valid("param");
+    const updates = c.req.valid("json");
+    const recipient = await emailSettingsService.updateRecipient(id, updates);
+
+    if (!recipient) {
+      return c.json({ error: "Recipient not found" }, 404);
+    }
+
+    return c.json(
+      {
+        ...recipient,
+        createdAt: new Date(recipient.createdAt).toISOString(),
+      },
+      200,
+    );
+  } catch (error: unknown) {
+    logger.error("[Email API] Update recipient error:", error);
+    return c.json(
+      {
+        error: "Failed to update recipient",
+        details: getErrorMessage(error),
+      },
+      400,
+    );
+  }
 });
 
 // ============== Send Email Route ==============

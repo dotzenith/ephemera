@@ -5,6 +5,7 @@ import type {
   UpdateEmailSettings,
   EmailRecipient,
   EmailRecipientCreate,
+  EmailRecipientUpdate,
   EmailTestRequest,
   EmailTestResponse,
   SendEmailResponse,
@@ -150,6 +151,34 @@ export const useDeleteEmailRecipient = () => {
       notifications.show({
         title: "Delete Failed",
         message: getErrorMessage(error) || "Failed to delete email recipient",
+        color: "red",
+      });
+    },
+  });
+};
+
+// Update email recipient
+export const useUpdateEmailRecipient = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      id,
+      ...updates
+    }: { id: number } & EmailRecipientUpdate) => {
+      return apiFetch<EmailRecipient>(`/email/recipients/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updates),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: emailKeys.recipients });
+    },
+    onError: (error: unknown) => {
+      notifications.show({
+        title: "Update Failed",
+        message: getErrorMessage(error) || "Failed to update email recipient",
         color: "red",
       });
     },

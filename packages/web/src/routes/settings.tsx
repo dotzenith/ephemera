@@ -63,6 +63,7 @@ import {
   useEmailRecipients,
   useAddEmailRecipient,
   useDeleteEmailRecipient,
+  useUpdateEmailRecipient,
 } from "../hooks/useEmail";
 
 const settingsSearchSchema = z.object({
@@ -106,6 +107,7 @@ function SettingsComponent() {
   const testEmail = useTestEmailConnection();
   const addRecipient = useAddEmailRecipient();
   const deleteRecipient = useDeleteEmailRecipient();
+  const updateRecipient = useUpdateEmailRecipient();
 
   // Fetch libraries after authentication
   const { data: librariesData, isLoading: loadingLibraries } =
@@ -370,6 +372,7 @@ function SettingsComponent() {
       addRecipient.mutate({
         email: newRecipientEmail,
         name: newRecipientName || null,
+        autoSend: false,
       });
       setNewRecipientEmail("");
       setNewRecipientName("");
@@ -1375,16 +1378,29 @@ function SettingsComponent() {
                                 {recipient.email}
                               </Text>
                             </Stack>
-                            <ActionIcon
-                              color="red"
-                              variant="light"
-                              onClick={() =>
-                                deleteRecipient.mutate(recipient.id)
-                              }
-                              loading={deleteRecipient.isPending}
-                            >
-                              <IconTrash size={16} />
-                            </ActionIcon>
+                            <Group gap="sm">
+                              <Switch
+                                size="xs"
+                                label="Auto-send"
+                                checked={recipient.autoSend}
+                                onChange={(e) =>
+                                  updateRecipient.mutate({
+                                    id: recipient.id,
+                                    autoSend: e.currentTarget.checked,
+                                  })
+                                }
+                              />
+                              <ActionIcon
+                                color="red"
+                                variant="light"
+                                onClick={() =>
+                                  deleteRecipient.mutate(recipient.id)
+                                }
+                                loading={deleteRecipient.isPending}
+                              >
+                                <IconTrash size={16} />
+                              </ActionIcon>
+                            </Group>
                           </Group>
                         ))}
                       </Stack>

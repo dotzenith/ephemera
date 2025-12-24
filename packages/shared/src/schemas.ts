@@ -920,6 +920,7 @@ export const emailRecipientSchema = z.object({
   id: z.number().describe("Recipient ID"),
   email: z.string().email().describe("Recipient email address"),
   name: z.string().nullable().describe("Recipient display name"),
+  autoSend: z.boolean().describe("Auto-send books when download completes"),
   createdAt: z.string().datetime().describe("When recipient was added"),
 });
 
@@ -929,9 +930,26 @@ export type EmailRecipient = z.infer<typeof emailRecipientSchema>;
 export const emailRecipientCreateSchema = z.object({
   email: z.string().email().describe("Recipient email address"),
   name: z.string().nullable().optional().describe("Recipient display name"),
+  autoSend: z
+    .boolean()
+    .optional()
+    .default(false)
+    .describe("Auto-send books when download completes"),
 });
 
 export type EmailRecipientCreate = z.infer<typeof emailRecipientCreateSchema>;
+
+// Email recipient update schema
+export const emailRecipientUpdateSchema = z.object({
+  email: z.string().email().optional().describe("Recipient email address"),
+  name: z.string().nullable().optional().describe("Recipient display name"),
+  autoSend: z
+    .boolean()
+    .optional()
+    .describe("Auto-send books when download completes"),
+});
+
+export type EmailRecipientUpdate = z.infer<typeof emailRecipientUpdateSchema>;
 
 // Send email request schema
 export const sendEmailRequestSchema = z.object({

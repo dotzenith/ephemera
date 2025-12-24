@@ -200,18 +200,46 @@ class EmailSettingsService {
   async addRecipient(
     email: string,
     name?: string | null,
+    autoSend?: boolean,
   ): Promise<EmailRecipient> {
     const result = await db
       .insert(emailRecipients)
       .values({
         email,
         name: name ?? null,
+        autoSend: autoSend ?? false,
         createdAt: Date.now(),
       })
       .returning();
 
     logger.info(`[Email Settings] Added recipient: ${email}`);
     return result[0];
+  }
+
+  /**
+   * Update an email recipient
+   */
+  async updateRecipient(
+    id: number,
+    updates: { email?: string; name?: string | null; autoSend?: boolean },
+  ): Promise<EmailRecipient | null> {
+    const existing = await this.getRecipient(id);
+    if (!existing) {
+      return null;
+    }
+
+    const result = await db
+      .update(emailRecipients)
+      .set({
+        email: updates.email ?? existing.email,
+        name: updates.name !== undefined ? updates.name : existing.name,
+        autoSend: updates.autoSend ?? existing.autoSend,
+      })
+      .where(eq(emailRecipients.id, id))
+      .returning();
+
+    logger.info(`[Email Settings] Updated recipient: ${id}`);
+    return result[0] || null;
   }
 
   /**
@@ -227,6 +255,25 @@ class EmailSettingsService {
       logger.info(`[Email Settings] Deleted recipient with id: ${id}`);
     }
     return deleted;
+  }
+
+  /**
+   * Get recipients with auto-send enabled
+   */
+  async getAutoSendRecipients(): Promise<EmailRecipient[]> {
+    try {
+      return await db
+        .select()
+        .from(emailRecipients)
+        .where(eq(emailRecipients.autoSend, true))
+        .all();
+    } catch (error) {
+      logger.error(
+        "[Email Settings] Error fetching auto-send recipients:",
+        error,
+      );
+      return [];
+    }
   }
 }
 

@@ -319,6 +319,7 @@ export const emailRecipients = sqliteTable("email_recipients", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   email: text("email").notNull(),
   name: text("name"),
+  autoSend: integer("auto_send", { mode: "boolean" }).notNull().default(false),
   createdAt: integer("created_at").notNull(),
 });
 
